@@ -9,17 +9,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    public static final String userName = "root";
-    public static final String dbName = "test1.1.3";
-    public static final String password = "root";
-    public static final String hostName = "localhost";
-    public static final String driver = "com.mysql.cj.jdbc.Driver";
+    public static final String USERNAME = "root";
+    public static final String DBNAME = "test1.1.3";
+    public static final String PASSWORD = "root";
+    public static final String HOSTNAME = "localhost";
+    public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static SessionFactory sessionFactory;
 
-    public static Connection getConnection()
-        throws SQLException {
-        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName + "?allowPublicKeyRetrieval=true&useSSL=false";
-        return DriverManager.getConnection(connectionURL, userName,password);
+    public static Connection getConnection() throws SQLException {
+        Connection conn = null;
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String connectionURL = "jdbc:mysql://" + HOSTNAME + ":3306/" + DBNAME + "?allowPublicKeyRetrieval=true&useSSL=false";
+        conn.setAutoCommit(false);
+        return DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
+
+
     }
 
 

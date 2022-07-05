@@ -27,7 +27,6 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = getConnection();
-            connection.setAutoCommit(false);
             connection.createStatement().execute(createTable);
             connection.commit();
             System.out.println("таблица создана");
@@ -49,11 +48,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() throws SQLException {
-        String dropTable = "TRUNCATE TABLE users";
+        String dropTable = "DELETE FROM users";
         Connection connection = null;
         try {
             connection = getConnection();
-            connection.setAutoCommit(false);
             connection.createStatement().execute(dropTable);
             connection.commit();
             System.out.println("таблица удалена");
@@ -113,7 +111,6 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = getConnection();
-            connection.setAutoCommit(false);
             connection.createStatement().execute(removeUserById);
             connection.commit();
             System.out.println("клиент удален");
@@ -141,21 +138,16 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> userList = new ArrayList<>();
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
-            try {
                 PreparedStatement preparedStatement = connection.prepareStatement(getAllUsers);
                 ResultSet resultSet = preparedStatement.executeQuery("SELECT * FROM users");
                 while (resultSet.next()) ;
                 User user = new User();
-                user.setId((long)resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setAge((byte) resultSet.getInt("age"));
+                resultSet.getInt("id");
+                resultSet.getString("name");
+                resultSet.getString("lastName");
+                resultSet.getInt("age");
                 userList.add(user);
-            } catch (SQLException e) {
-                System.out.println("пользователь  не записан");
-                throw new RuntimeException(e);
-            }
+
             connection.commit();
         } catch (Exception ex) {
             if (connection != null) {
@@ -178,7 +170,6 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             connection.createStatement().execute(cleanUsersTable);
             connection.commit();
             System.out.println("таблица очищена");
