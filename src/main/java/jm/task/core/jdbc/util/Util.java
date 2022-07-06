@@ -16,18 +16,32 @@ public class Util {
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static SessionFactory sessionFactory;
 
-    public static Connection getConnection() throws SQLException {
+   /* public static Connection getConnection() throws SQLException {
         Connection conn = null;
         try {
             Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            conn = DriverManager.getConnection(DBNAME, USERNAME, PASSWORD);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
         String connectionURL = "jdbc:mysql://" + HOSTNAME + ":3306/" + DBNAME + "?allowPublicKeyRetrieval=true&useSSL=false";
         conn.setAutoCommit(false);
         return DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
 
 
+    }*/
+    public static Connection getConnection() {
+        try {
+            Class.forName(DRIVER);
+            String connectionURL = "jdbc:mysql://" + HOSTNAME + ":3306/" + DBNAME + "?allowPublicKeyRetrieval=true&useSSL=false";
+            Connection connection = DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
+            connection.setAutoCommit(false);
+            return connection;
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 

@@ -48,7 +48,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() throws SQLException {
-        String dropTable = "DELETE FROM users";
+        String dropTable = "DROP TABLE IF EXISTS users";
         Connection connection = null;
         try {
             connection = getConnection();
@@ -142,10 +142,10 @@ public class UserDaoJDBCImpl implements UserDao {
                 ResultSet resultSet = preparedStatement.executeQuery("SELECT * FROM users");
                 while (resultSet.next()) ;
                 User user = new User();
-                resultSet.getInt("id");
+                resultSet.getLong("id");
                 resultSet.getString("name");
                 resultSet.getString("lastName");
-                resultSet.getInt("age");
+                resultSet.getByte("age");
                 userList.add(user);
 
             connection.commit();

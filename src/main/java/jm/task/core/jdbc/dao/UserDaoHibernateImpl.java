@@ -37,10 +37,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
 
+
     }
 
     @Override
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() {
         return null;
     }
 
