@@ -24,7 +24,7 @@ import java.util.List;
     @Override
     public void createUsersTable() {
         try (Session session = sessionFactory.getCurrentSession()) {
-            String sql = "CREATE TABLE IF NOT EXISTS user (id BIGINT AUTO_INCREMENT, name VARCHAR(50)," + "last_name VARCHAR(50), age TINYNT, PRIMARY KEY(id));";
+            String sql = "CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, name VARCHAR(50)," + "last_name VARCHAR(50), age TINYNT, PRIMARY KEY(id));";
             session.beginTransaction();
             session.createNativeQuery(sql);
             session.getTransaction();
@@ -37,7 +37,7 @@ import java.util.List;
         public void dropUsersTable () {
             try (Session session = sessionFactory.getCurrentSession()) {
                 session.beginTransaction();
-                session.createNativeQuery("TRUNCATE TABLE users");
+                session.createNativeQuery("DROP TABLE IF EXISTS users");
                 session.getTransaction().commit();
             }
 

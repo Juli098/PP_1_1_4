@@ -21,13 +21,13 @@ public class Util {
     public static final String HOSTNAME = "localhost";
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static SessionFactory sessionFactory;
-
+    private static String connectionURL = "jdbc:mysql://" + HOSTNAME + ":3306/" + DBNAME + "?allowPublicKeyRetrieval=true&useSSL=false";
 
 
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
-            String connectionURL = "jdbc:mysql://" + HOSTNAME + ":3306/" + DBNAME + "?allowPublicKeyRetrieval=true&useSSL=false";
+
             Connection connection = DriverManager.getConnection(connectionURL, USERNAME, PASSWORD);
             connection.setAutoCommit(false);
             return connection;
@@ -48,10 +48,10 @@ public class Util {
 
 
         Properties settings = new Properties();
-        settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        settings.put(Environment.URL, "jdbc:mysql://localhost:3306/mysql");
-        settings.put(Environment.USER, "root");
-        settings.put(Environment.PASS, "root");
+        settings.put(Environment.DRIVER, DRIVER);
+        settings.put(Environment.URL, connectionURL);
+        settings.put(Environment.USER,USERNAME);
+        settings.put(Environment.PASS,PASSWORD);
         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
         settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
@@ -65,6 +65,9 @@ public class Util {
                 e.printStackTrace();
             }
         } return sessionFactory;
+    }
+
+    private static class PASSWORD {
     }
 }
 
