@@ -62,7 +62,6 @@ import java.util.List;
         public void removeUserById ( long id) {
             try (Session session = sessionFactory.getCurrentSession()) {
                 session.beginTransaction();
-                session.delete(session.get(User.class, id));
                 session.createQuery("delete User where id = :id").setParameter("id", id).executeUpdate();
                 session.getTransaction().commit();
             }
